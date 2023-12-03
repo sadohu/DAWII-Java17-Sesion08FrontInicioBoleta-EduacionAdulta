@@ -21,49 +21,50 @@ import { TokenService } from 'src/app/security/token.service';
 })
 export class BoletaComponent {
 
-  objCliente : Cliente = {};
-  objProducto : Producto = {};
-  dataSource:any;
+  objCliente: Cliente = {};
+  objProducto: Producto = {};
+  dataSource: any;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  displayedColumns = ["idProducto","nombre","precio","cantidad",'actions'];
+  displayedColumns = ["idProducto", "nombre", "precio", "cantidad", 'actions'];
 
-  lstProductos : Producto [] = [];
-  objUsuario: Usuario = {} ;
+  lstProductos: Producto[] = [];
+  objUsuario: Usuario = {};
 
-  constructor(private dialogService: MatDialog, 
-              private boletaService: BoletaService,
-              private tokenService: TokenService) {
-              this.objUsuario.idUsuario = tokenService.getUserId();
+  constructor(private dialogService: MatDialog,
+    private boletaService: BoletaService,
+    private tokenService: TokenService) {
+    this.objUsuario.idUsuario = tokenService.getUserId();
   }
 
-  
-  ngOnInit(): void {}
 
-  buscaCliente(){
-  
-  }
+  ngOnInit(): void { }
 
-  cargaCliente(){
-   
+  buscaCliente() {
+    const dialog = this.dialogService.open(ModelClienteComponent);
+    dialog.afterClosed().subscribe(() => this.cargaCliente());
   }
 
-  buscaProducto(){
-    
+  cargaCliente() {
+
   }
 
-  cargaProducto(){
-    
+  buscaProducto() {
+
   }
 
-  agregarProducto(){
-   
+  cargaProducto() {
+
   }
 
-  eliminaProducto(objProducto: Producto){
-   
+  agregarProducto() {
+
   }
-  registrarBoleta(){
-     
+
+  eliminaProducto(objProducto: Producto) {
+
   }
-  
+  registrarBoleta() {
+
+  }
+
 }
