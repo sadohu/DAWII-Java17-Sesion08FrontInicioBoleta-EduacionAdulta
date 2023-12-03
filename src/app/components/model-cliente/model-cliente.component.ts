@@ -15,34 +15,38 @@ const OPCIONES_CLIENTE = 'Opciones';
 export class ModelClienteComponent {
 
   //Filtro de Grila
-  filtro: string ="";
+  filtro: string = "";
 
   //Grilla
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
-  displayedColumns = ["idCliente","nombre","apellido",'actions'];
+  displayedColumns = ["idCliente", "nombre", "apellido", 'actions'];
   pageIndex = 0;
   pageSize = 20;
-  pageSizeOptions = [5,10];
-  dataSource:any;
+  pageSizeOptions = [5, 10];
+  dataSource: any;
 
   constructor(private dialog: MatDialog, private clienteService: ClienteService) {
-
+    this.refreshTable("_all");
   }
 
   seleccioneCliente(objCliente: Cliente) {
-   
+
   }
 
   applyFilter() {
-      
-   }
+    this.refreshTable(this.filtro);
+  }
 
-   onPageChange(any : any){
-     
-   }
+  onPageChange(any: any) {
 
-  private refreshTable() {
-      
+  }
+
+  private refreshTable(filtro: string) {
+    filtro = (filtro.trim() == "") ? "_all" : filtro.trim();
+    this.clienteService.consultaFiltro(filtro, this.pageIndex, this.pageSize).subscribe(data => {
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
 }
