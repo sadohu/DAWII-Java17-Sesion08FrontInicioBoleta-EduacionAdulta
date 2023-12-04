@@ -58,7 +58,55 @@ export class BoletaComponent {
   }
 
   agregarProducto() {
+    if (this.objProducto.idProducto == null) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Debe seleccionar un producto',
+      });
+      return;
+    }
 
+    if (this.lstProductos.find(p => p.idProducto == this.objProducto.idProducto)) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'El producto ya se encuentra en la lista',
+      });
+      return;
+    }
+
+    if (this.objProducto.stock! <= 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No hay stock del producto seleccionado',
+      });
+      return;
+    }
+
+    if (this.objProducto.cantidad == null || this.objProducto.cantidad <= 0) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Debe ingresar una cantidad',
+      });
+      return;
+    }
+
+    if (this.objProducto.stock! < this.objProducto.cantidad!) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'No hay stock suficiente del producto seleccionado',
+      });
+      return;
+    }
+
+    this.lstProductos.push(this.objProducto);
+    this.dataSource = new MatTableDataSource(this.lstProductos);
+    this.dataSource.paginator = this.paginator;
+    this.objProducto = {};
   }
 
   eliminaProducto(objProducto: Producto) {
