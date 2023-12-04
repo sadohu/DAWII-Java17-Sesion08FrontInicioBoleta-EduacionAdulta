@@ -110,7 +110,12 @@ export class BoletaComponent {
   }
 
   eliminaProducto(objProducto: Producto) {
-
+    const index = this.lstProductos.findIndex(p => p.idProducto == objProducto.idProducto);
+    if (index != -1) {
+      this.lstProductos.splice(index, 1);
+      this.dataSource = new MatTableDataSource(this.lstProductos);
+      this.dataSource.paginator = this.paginator;
+    }
   }
   registrarBoleta() {
 
