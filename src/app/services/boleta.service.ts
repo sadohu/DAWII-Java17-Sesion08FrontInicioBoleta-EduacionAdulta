@@ -4,16 +4,16 @@ import { HttpClient } from '@angular/common/http';
 import { AppSettings } from '../app.settings';
 import { Observable } from 'rxjs';
 
-const baseUrl =  AppSettings.API_ENDPOINT + "/boleta";
+const baseUrl = AppSettings.API_ENDPOINT + "/boleta";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BoletaService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  inserta(obj:Boleta):Observable<any>{
-    return this.http.post(baseUrl +"/registraBoleta", obj);
-}
+  inserta(obj: Boleta): Observable<any> {
+    return this.http.post(baseUrl + "/boleta", obj);
+  }
 }

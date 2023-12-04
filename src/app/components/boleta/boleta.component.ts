@@ -118,6 +118,41 @@ export class BoletaComponent {
     }
   }
   registrarBoleta() {
+    let detalle: BoletaHasProducto[] = [];
+
+    this.lstProductos.forEach(item => {
+
+      let objDetalle: BoletaHasProducto = {
+        boletaHasProductoPK: {
+          idBoleta: 0,
+          idProducto: item.idProducto!
+        },
+        cantidad: item.cantidad!,
+        precio: item.precio!,
+        producto: item,
+      };
+
+      detalle.push(objDetalle);
+    });
+
+    let boleta: Boleta = {
+      cliente: this.objCliente,
+      usuario: this.objUsuario,
+      detallesBoleta: detalle,
+    };
+
+    this.boletaService.inserta(boleta).subscribe(data => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Boleta registrada',
+        text: data.mensaje,
+      });
+      this.objCliente = {};
+      this.objProducto = {};
+      this.lstProductos = [];
+      this.dataSource = new MatTableDataSource(this.lstProductos);
+      this.dataSource.paginator = this.paginator;
+    });
 
   }
 
