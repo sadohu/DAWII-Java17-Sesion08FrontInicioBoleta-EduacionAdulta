@@ -49,11 +49,12 @@ export class BoletaComponent {
   }
 
   buscaProducto() {
-
+    const dialog = this.dialogService.open(ModelProductoComponent);
+    dialog.afterClosed().subscribe(() => this.cargaProducto());
   }
 
   cargaProducto() {
-
+    this.objProducto = JSON.parse(window.sessionStorage.getItem("PRODUCTO") || '{}');
   }
 
   agregarProducto() {

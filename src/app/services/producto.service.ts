@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Producto } from '../models/producto.model';
 
-const baseUrl =  AppSettings.API_ENDPOINT + "/boleta";
+const baseUrl = AppSettings.API_ENDPOINT + "/boleta";
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +12,9 @@ const baseUrl =  AppSettings.API_ENDPOINT + "/boleta";
 export class ProductoService {
 
 
-  constructor(private http:HttpClient) { }
- 
-  consultaFiltro(filtro:string, page: number, size: number):Observable<Producto[]>{
-    if (filtro == ""){
-      return  this.http.get<Producto[]>(baseUrl +'/listaProducto?page='+ page+'&size=' + size); 
-    }else{
-      return  this.http.get<Producto[]>(baseUrl +'/listaProducto/'+filtro+'?page='+ page+'&size=' + size); 
-    }
-  }  
+  constructor(private http: HttpClient) { }
 
+  consultaFiltro(filtro: string, page: number, size: number): Observable<Producto[]> {
+    return this.http.get<Producto[]>(baseUrl + '/productos/' + filtro + '?page=' + page + '&size=' + size);
+  }
 }

@@ -13,34 +13,39 @@ import { ProductoService } from 'src/app/services/producto.service';
 export class ModelProductoComponent {
 
   //Filtro de Grila
-  filtro: string ="";
+  filtro: string = "";
 
   //Grilla
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
-  displayedColumns = ["idProducto","nombre","precio","stock",'actions'];
+  displayedColumns = ["idProducto", "nombre", "precio", "stock", 'actions'];
   pageIndex = 0;
   pageSize = 20;
-  pageSizeOptions = [5,10];
-  dataSource:any;
+  pageSizeOptions = [5, 10];
+  dataSource: any;
 
   constructor(private dialog: MatDialog, private productoService: ProductoService) {
-   
+    this.refreshTable("_all");
   }
 
   seleccioneProducto(objProducto: Producto) {
-    
+    window.sessionStorage.setItem("PRODUCTO", JSON.stringify(objProducto));
+    this.dialog.closeAll();
   }
 
   applyFilter() {
-    
- }
+    this.refreshTable(this.filtro);
+  }
 
- onPageChange(any : any){
- 
-}
+  onPageChange(any: any) {
 
-  private refreshTable() {
-   
+  }
+
+  private refreshTable(filtro: string) {
+    filtro = (filtro.trim() == "") ? "_all" : filtro.trim();
+    this.productoService.consultaFiltro(filtro, this.pageIndex, this.pageSize).subscribe(data => {
+      this.dataSource = new MatTableDataSource(data);
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
 }
