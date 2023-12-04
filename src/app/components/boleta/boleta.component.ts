@@ -45,7 +45,7 @@ export class BoletaComponent {
   }
 
   cargaCliente() {
-
+    this.objCliente = JSON.parse(window.sessionStorage.getItem("CLIENTE") || '{}');
   }
 
   buscaProducto() {

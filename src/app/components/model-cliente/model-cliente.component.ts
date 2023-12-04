@@ -30,7 +30,8 @@ export class ModelClienteComponent {
   }
 
   seleccioneCliente(objCliente: Cliente) {
-
+    window.sessionStorage.setItem("CLIENTE", JSON.stringify(objCliente));
+    this.dialog.closeAll();
   }
 
   applyFilter() {
